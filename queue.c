@@ -99,8 +99,14 @@ bool q_insert_tail(queue_t *q, char *s)
 */
 bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
 {
-    /* You need to fix up this code. */
+    if (q == NULL || q->size == 0)
+        return false;
+
+    list_ele_t *rm = q->head;
+    strncpy(sp, rm->value, bufsize);
     q->head = q->head->next;
+    free(rm);
+    rm = NULL;
     return true;
 }
 
