@@ -56,6 +56,7 @@ bool q_insert_head(queue_t *q, char *s)
     list_ele_t *newh;
     if ((newh = malloc(sizeof(list_ele_t))) == NULL)
         goto fail;
+    newh->next = NULL;
 
     int len = strlen(s) + 1;
     if ((newh->value = malloc(len)) == NULL)
@@ -64,6 +65,8 @@ bool q_insert_head(queue_t *q, char *s)
     strncpy(newh->value, s, len);
     newh->next = q->head;
     q->head = newh;
+    if (q->tail == NULL)
+        q->tail = newh;
     q->size++;
     return true;
 
@@ -84,8 +87,30 @@ fail:
  */
 bool q_insert_tail(queue_t *q, char *s)
 {
-    /* You need to write the complete code for this function */
-    /* Remember: It should operate in O(1) time */
+    if (q == NULL)
+        goto fail;
+
+    list_ele_t *newt;
+    if ((newt = malloc(sizeof(list_ele_t))) == NULL)
+        goto fail;
+
+    int len = strlen(s) + 1;
+    if ((newt->value = malloc(len)) == NULL)
+        goto fail_and_free;
+    newt->next = NULL;
+
+    strncpy(newt->value, s, len);
+    q->tail->next = newt;
+    q->tail = newt;
+    if (q->head == NULL)
+        q->head = newt;
+    q->size++;
+    return true;
+
+fail_and_free:
+    free(newt);
+    newt = NULL;
+fail:
     return false;
 }
 
