@@ -130,6 +130,7 @@ bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
     list_ele_t *rm = q->head;
     strncpy(sp, rm->value, bufsize);
     q->head = q->head->next;
+    q->size--;
     free(rm);
     rm = NULL;
     return true;
@@ -141,9 +142,9 @@ bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
  */
 int q_size(queue_t *q)
 {
-    /* You need to write the code for this function */
-    /* Remember: It should operate in O(1) time */
-    return 0;
+    if (q == NULL)
+        return 0;
+    return q->size;
 }
 
 /*
