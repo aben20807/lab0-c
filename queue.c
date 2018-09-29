@@ -61,7 +61,7 @@ bool q_insert_head(queue_t *q, char *s)
     int len = strlen(s) + 1;
     if ((newh->value = malloc(len)) == NULL)
         goto fail_and_free;
-    strncpy(newh->value, s, len);
+    snprintf(newh->value, len, "%s", s);
 
     newh->next = q->head;
     q->head = newh;
@@ -98,7 +98,7 @@ bool q_insert_tail(queue_t *q, char *s)
     int len = strlen(s) + 1;
     if ((newt->value = malloc(len)) == NULL)
         goto fail_and_free;
-    strncpy(newt->value, s, len);
+    snprintf(newt->value, len, "%s", s);
 
     if (q->tail != NULL)
         q->tail->next = newt;
