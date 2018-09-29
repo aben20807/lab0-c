@@ -36,6 +36,9 @@ queue_t *q_new()
 /* Free all storage used by queue */
 void q_free(queue_t *q)
 {
+    if (q == NULL)
+        return;
+
     while (q->size)
         q_remove_head(q, NULL, 0);
     free(q);
@@ -72,7 +75,7 @@ bool q_insert_head(queue_t *q, char *s)
 
 fail_and_free:
     free(newh);
-    newh = NULL;
+
 fail:
     return false;
 }
@@ -110,7 +113,7 @@ bool q_insert_tail(queue_t *q, char *s)
 
 fail_and_free:
     free(newt);
-    newt = NULL;
+
 fail:
     return false;
 }
@@ -138,7 +141,6 @@ bool q_remove_head(queue_t *q, char *sp, size_t bufsize)
     q->size--;
     free(rm->value);
     free(rm);
-    rm = NULL;
     return true;
 }
 
